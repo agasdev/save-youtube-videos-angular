@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   public token: string;
 
   constructor(private _userService: UserService) {
-    this.title = 'Inicio';
+    this.title = 'Mis vídeos';
   }
 
   ngOnInit(): void {
