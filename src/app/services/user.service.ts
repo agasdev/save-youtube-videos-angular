@@ -54,4 +54,11 @@ export class UserService {
 
     return this.token;
   }
+
+  update(user: User, token: string): Observable<any> {
+    const params = 'json=' + JSON.stringify(user);
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization', token);
+
+    return this._http.put(this.url + 'user', params, {headers});
+  }
 }

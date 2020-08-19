@@ -2,4 +2,71 @@
   <h1>{{ title }}</h1>
   <hr />
 
+  <div class="alert alert-success col-md-7 mx-auto" *ngIf="status === 'success'">
+    Has actualizado tus datos correctamente
+  </div>
+  <div class="alert alert-danger col-md-7 mx-auto" *ngIf="status === 'error'">
+    Ha fallado la actualización de los datos
+  </div>
+
+  <form class="col-md-7 px-0 mx-auto" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input
+        class="form-control"
+        id="name"
+        name="name"
+        pattern="[a-zA-ZÀ-ÿ ñ]+"
+        required
+        type="text"
+        #name="ngModel"
+        [(ngModel)]="user.name"
+        [ngClass]="{'is-invalid': !name.valid && name.touched}"
+      >
+
+      <small class="invalid-feedback d-block" *ngIf="!name.valid && name.touched">El nombre no es válido</small>
+    </div>
+
+    <div class="form-group">
+      <label for="surname">Apellidos</label>
+      <input
+        class="form-control"
+        id="surname"
+        name="surname"
+        pattern="[a-zA-ZÀ-ÿ ñ]+"
+        required
+        type="text"
+        #surname="ngModel"
+        [(ngModel)]="user.surname"
+        [ngClass]="{'is-invalid': !surname.valid && surname.touched}"
+      >
+
+      <small class="invalid-feedback d-block" *ngIf="!surname.valid && surname.touched">Los apellido no son válidos</small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input
+        class="form-control"
+        id="email"
+        name="email"
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        required
+        type="email"
+        #email="ngModel"
+        [(ngModel)]="user.email"
+        [ngClass]="{'is-invalid': !email.valid && email.touched}"
+      >
+
+      <small class="invalid-feedback d-block" *ngIf="!email.valid && email.touched">El correo electrónico no es válido</small>
+    </div>
+
+    <input
+      class="btn btn-outline-dark"
+      type="submit"
+      value="Actualizar"
+      [disabled]="userEditForm.invalid"
+    />
+  </form>
+
 </div>
