@@ -12,14 +12,13 @@ export class UserEditComponent implements OnInit {
   public title: string;
   public user: User;
   public status: string;
-  public identity: object;
+  public identity: any;
   public token: string;
 
   constructor(private _userService: UserService) {
     this.title = 'Ajustes personales';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    // @ts-ignore
     this.user = new User(this.identity.sub, this.identity.name, this.identity.surname, this.identity.email, '', 'ROLE_USER', '');
   }
 
@@ -32,9 +31,7 @@ export class UserEditComponent implements OnInit {
         if (response.status === 'success') {
           this.status = 'success';
           this.identity = response.user;
-          // @ts-ignore
           this.identity.sub = response.user.id;
-          // @ts-ignore
           delete this.identity.id;
           this.user = response.user;
           localStorage.setItem('identity', JSON.stringify(this.identity));
