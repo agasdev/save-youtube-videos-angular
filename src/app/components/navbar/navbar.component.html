@@ -13,7 +13,7 @@
         <a class="nav-link" [routerLink]="['/home']" >Mis videos <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" *ngIf="identity">
-        <a class="nav-link" href="#">Guardar nuevo vídeo</a>
+        <a class="nav-link" [routerLink]="['/save-video']">Guardar nuevo vídeo</a>
       </li>
     </ul>
 
@@ -32,7 +32,7 @@
           {{identity.name + ' ' + identity.surname}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" [routerLink]="['/settings']">Ajustes</a>
           <a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar sesión</a>
         </div>
       </li>
