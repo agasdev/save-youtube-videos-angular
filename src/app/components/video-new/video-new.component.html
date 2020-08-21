@@ -2,4 +2,69 @@
   <h1>{{ title }}</h1>
   <hr />
 
+  <div class="alert alert-success col-md-7 mx-auto" *ngIf="status === 'success'">
+    El vídeo se ha guardado correctamente
+  </div>
+  <div class="alert alert-danger col-md-7 mx-auto" *ngIf="status === 'error'">
+    El vídeo no se ha podido guardar.
+  </div>
+
+  <form class="col-md-7 px-0 mx-auto" #videoNewForm="ngForm" (ngSubmit)="onSubmit(videoNewForm)">
+    <div class="form-group">
+      <label for="title">Titulo</label>
+      <input
+        class="form-control"
+        id="title"
+        name="title"
+        required
+        type="text"
+        #title="ngModel"
+        [(ngModel)]="video.title"
+        [ngClass]="{'is-invalid': !title.valid && title.touched}"
+      >
+
+      <small class="invalid-feedback d-block" *ngIf="!title.valid && title.touched">El titulo no es válido</small>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        required
+        type="text"
+        #description="ngModel"
+        [(ngModel)]="video.description"
+        [ngClass]="{'is-invalid': !description.valid && description.touched}"
+      ></textarea>
+
+      <small class="invalid-feedback d-block" *ngIf="!description.valid && description.touched">La descripción no es válida</small>
+    </div>
+
+    <div class="form-group">
+      <label for="url">Url de vídeo de YouTube</label>
+      <input
+        class="form-control"
+        id="url"
+        name="url"
+        required
+        type="text"
+        #url="ngModel"
+        [(ngModel)]="video.url"
+        [ngClass]="{'is-invalid': !url.valid && url.touched}"
+      >
+
+      <small class="invalid-feedback d-block" *ngIf="!url.valid && url.touched">La url no es válida</small>
+    </div>
+
+    <input
+      class="btn btn-outline-dark"
+      type="submit"
+      value="Guardar vídeo"
+      [disabled]="videoNewForm.invalid"
+    />
+  </form>
+
+
 </div>
