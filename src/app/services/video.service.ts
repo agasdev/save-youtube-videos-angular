@@ -22,11 +22,14 @@ export class VideoService {
     return this._http.post(this.url + 'video', params, {headers});
   }
 
-  getVideos(token: string): Observable<any> {
+  getVideos(token: string, page: number): Observable<any> {
+    if (!page) {
+      page = 1;
+    }
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
                                      .set('Authorization', token);
 
-    return this._http.get(this.url + 'videos', {headers});
+    return this._http.get(this.url + 'videos?page=' + page, {headers});
   }
 
   getVideo(token: string, videoId: number): Observable<any> {

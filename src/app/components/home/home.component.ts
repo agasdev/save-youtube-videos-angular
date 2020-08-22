@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params} from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { VideoService } from '../../services/video.service';
-import {Video} from '../../models/video';
+import { Video } from '../../models/video';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +16,31 @@ export class HomeComponent implements OnInit {
   public token: string;
   public status: string;
   public videos: Array<Video>;
+  public page: number;
+  public nextPage: number;
+  public prevPage: number;
+  public numberPages: Array<number>;
 
-  constructor(private _userService: UserService, private _videoService: VideoService) {
+  constructor(
+    private _userService: UserService,
+    private _videoService: VideoService,
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {
     this.title = 'Mis vídeos';
   }
 
   ngOnInit(): void {
     this.loadUser();
-    this.getVideos();
+    this._route.params.subscribe(params => {
+      let page: number = +params.page;
+      if (!page) {
+        page = 1;
+        this.prevPage = 1;
+        this.nextPage = 2;
+      }
+      this.getVideos(page);
+    });
   }
 
   loadUser(): void {
@@ -30,12 +48,21 @@ export class HomeComponent implements OnInit {
     this.token = this._userService.getToken();
   }
 
-  getVideos(): void {
-    this._videoService.getVideos(this.token).subscribe(
+  getVideos(page): void {
+    this._videoService.getVideos(this.token, page).subscribe(
       response => {
         if (response.status === 'success') {
-          this.status = 'success';
           this.videos = response.videos;
+          this.status = 'success';
+
+          const numberPages: Array<number> = [];
+          for (let i = 1; i <= response.totalPages; i++) {
+            numberPages.push(i);
+          }
+          this.numberPages = numberPages;
+
+          this.prevPage = page >= 2 ? page - 1 : 1;
+          this.nextPage = page < response.totalPages ? page + 1 : response.totalPages;
         }
       },
       error => {
