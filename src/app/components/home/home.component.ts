@@ -32,6 +32,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+    this.actualPage();
+  }
+
+  actualPage(): void {
     this._route.params.subscribe(params => {
       let page: number = +params.page;
       if (!page) {
@@ -92,5 +96,16 @@ export class HomeComponent implements OnInit {
 
     return thumburl;
 
+  }
+
+  deleteVideo(videoId): void {
+    this._videoService.delete(this.token, videoId).subscribe(
+      respone => {
+        this.actualPage();
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }
