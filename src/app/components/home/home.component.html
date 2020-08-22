@@ -2,6 +2,28 @@
   <h1>{{ title }}</h1>
   <hr />
 
+  <div class="card-columns">
+    <article class="card w-100" *ngFor="let video of videos">
+      <div class="card-header">
+        <h3>{{ video.title }}</h3>
+      </div>
+      <div class="card-body">
+        <div class="video-image w-100" *ngIf="video.url">
+          <img src="{{ getThumb(video.url, null)}}" class="w-100" alt="{{video.title}}"/>
+        </div>
+        <div class="video-image w-100" *ngIf="!video.url">
+          <img src="assets/img/default.jpg" class="w-100" alt="{{video.title}}"/>
+        </div>
+
+        <div class="video-buttons mt-3">
+          <a [routerLink]="['/home']" class="btn btn-outline-dark btn-sm mr-2">Ver</a>
+          <a [routerLink]="['/home']" class="btn btn-outline-dark btn-sm mr-2">Editar</a>
+          <a [routerLink]="['/home']" class="btn btn-outline-danger btn-sm">Borrar</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
 </div>
 
 <div class="col-md-12 mt-3" *ngIf="!identity">
